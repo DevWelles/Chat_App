@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./containers/Login";
+import Chat from "./containers/Chat";
+import { connect } from "react-redux";
+import { Container } from "react-bootstrap";
 
-function App() {
+function App({ member }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Container>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route
+            path="/chat"
+            element={
+              member.username ? <Chat /> : <Navigate to="/" replace={true} />
+            }
+          ></Route>
+        </Routes>
+      </Container>
+    </BrowserRouter>
   );
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    member: state.member,
+  };
+}
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
