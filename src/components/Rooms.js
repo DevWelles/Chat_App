@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 
 const Rooms = ({ rooms, changeRoom }) => {
   const handleChange = (event) => {
@@ -7,18 +8,18 @@ const Rooms = ({ rooms, changeRoom }) => {
     //console.log(roomName);
   };
   return (
-    <div>
-      <h2>Rooms:</h2>
-      <ul className="onlineUsersBox">
+    <div className="d-flex flex-column align-items-center onlineUsers">
+      <h3>Rooms:</h3>
+      <ul className="d-flex flex-column align-items-center">
         {rooms.map((room) => (
-          <button
-            className="user"
+          <Button
+            className="btn btn-dark btn-lg btn-block m-1"
             key={Math.random() * 10000}
             value={room}
             onClick={handleChange}
           >
             {room}
-          </button>
+          </Button>
         ))}
       </ul>
     </div>

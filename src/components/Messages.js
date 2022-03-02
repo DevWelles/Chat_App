@@ -5,8 +5,20 @@ const Messages = ({ currentMember, messages }) => {
   //console.log(currentMember);
 
   const renderMessage = (message) => {
-    console.log(currentMember.id);
-    console.log(message);
+    // console.log(currentMember.id);
+    //console.log(message);
+
+    let avatar;
+    if (message.member.clientData.avatar.startsWith("#")) {
+      avatar = (
+        <span
+          className="avatar"
+          style={{ backgroundColor: message.member.clientData.avatar }}
+        />
+      );
+    } else {
+      avatar = <div className="avatar">{message.member.clientData.avatar}</div>;
+    }
     const myMessage = currentMember.id === message.member.id;
     console.log(myMessage);
     const className = myMessage
@@ -15,10 +27,7 @@ const Messages = ({ currentMember, messages }) => {
 
     return (
       <li className={className} key={message.id}>
-        <span
-          className="avatar"
-          style={{ backgroundColor: message.member.clientData.avatar }}
-        />
+        {avatar}
         <div className="Message-content">
           <div className="username">{message.member.clientData.username}</div>
           <div className="text">{message.text}</div>
@@ -27,7 +36,7 @@ const Messages = ({ currentMember, messages }) => {
     );
   };
   return (
-    <ul className="Messages-list">
+    <ul className="Messages-list ">
       {messages.map((message) => renderMessage(message))}
     </ul>
   );

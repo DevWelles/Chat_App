@@ -8,17 +8,15 @@ import { Container } from "react-bootstrap";
 function App({ member }) {
   return (
     <BrowserRouter>
-      <Container>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route
-            path="/chat"
-            element={
-              member.username ? <Chat /> : <Navigate to="/" replace={true} />
-            }
-          ></Route>
-        </Routes>
-      </Container>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route
+          path="/chat"
+          element={
+            member.username ? <Chat /> : <Navigate to="/" replace={true} />
+          }
+        ></Route>
+      </Routes>
     </BrowserRouter>
   );
 }

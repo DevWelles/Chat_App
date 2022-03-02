@@ -1,4 +1,4 @@
-import { randomColor } from "../util/functions";
+import { randomColor } from "../util/helpers";
 import {
   UPDATE_USERNAME,
   LOGIN,
@@ -9,6 +9,7 @@ import {
   ADD_NEW_MESSAGE,
   UPDATE_MESSAGE_VALUE,
   ADD_NEW_USER,
+  SET_AVATAR,
 } from "./actions";
 
 const initialState = {
@@ -72,6 +73,8 @@ export default function reducer(state = initialState, action) {
     }
     case ADD_NEW_USER:
       return { ...state, onlineUsers: [...state.onlineUsers, action.payload] };
+    case SET_AVATAR:
+      return { ...state, member: { ...state.member, avatar: action.payload } };
     default:
       return state;
   }

@@ -7,6 +7,7 @@ export const UPDATE_ONLINE_USERS = "UPDATE_ONLINE_USERS";
 export const ADD_NEW_MESSAGE = "ADD_NEW_MESSAGE";
 export const UPDATE_MESSAGE_VALUE = "UPDATE_MESSAGE_VALUE"; //updateam u stanju currentmessage na ono sto user tipka u input za slanje nove por
 export const ADD_NEW_USER = "ADD_NEW_USER";
+export const SET_AVATAR = "SET_AVATAR";
 
 export const updateUsername = (inputLoginValue) => {
   return { type: UPDATE_USERNAME, payload: inputLoginValue };
@@ -34,4 +35,7 @@ export const updateMessageValue = (inputMessageValue) => {
 };
 export const addNewUser = (newUser) => {
   return { type: ADD_NEW_USER, payload: newUser };
+};
+export const setAvatar = (avatar) => {
+  return { type: SET_AVATAR, payload: avatar };
 };

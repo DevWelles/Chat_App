@@ -10,10 +10,11 @@ import {
   addNewUser,
 } from "../redux/actions";
 import Rooms from "../components/Rooms";
-import AddNewRoom from "../components/AddNewRoom";
+
 import OnlineUsers from "../components/OnlineUsers";
 import Messages from "../components/Messages";
 import Input from "../components/Input";
+import { Container, Row, Col } from "react-bootstrap";
 
 class Chat extends Component {
   constructor(props) {
@@ -105,23 +106,37 @@ class Chat extends Component {
   // }
   render() {
     return (
-      <div>
-        <h1>My Chat App</h1>
-        <p>You are currently in {this.props.currentRoom} room</p>
-        <OnlineUsers onlineUsers={this.props.onlineUsers} />
-        <Rooms rooms={this.props.rooms} changeRoom={this.changeRoom} />
-        <AddNewRoom rooms={this.props.rooms} />
-        <Messages
-          currentMember={this.props.member}
-          messages={this.props.messages}
-        />
-        <Input
-          onSendMessage={this.onSendMessage} //metoda za publishati por u this.drone koji pritom pozove listener this.room.on("message", (message) =>{....}
-          //a u tom listeneru se poziva  this.props.addNewMessage(newMessage) koja ce updeatati samo stanje u reduxu tako da ovu metodu poizvamo na onSubmit da pokrene tu lančanu reakciju 1. this.drone.publish 2. this.room.on(message...) 3. update redux state sa this.props.addNewMessage(newMessage)
-          updateMessageValue={this.props.updateMessageValue} //metoda za updateati trenutni input value od tipkanja noce por jer mora biti kontolirana forma u reactu
-          currentMessageValue={this.props.currentMessageValue}
-        />
-      </div>
+      <Container fluid className="chat-bg">
+        <Row className=" row-chat row-breakpoint">
+          <Col>
+            <OnlineUsers onlineUsers={this.props.onlineUsers} />
+          </Col>
+          <Col
+            md={6}
+            className="d-flex flex-column align-items-center chat-col-breakpoint "
+          >
+            <div className="d-flex flex-column align-items-center ">
+              <h3>Welcome {this.props.member.username}</h3>
+              <h5>You are currently in room:</h5>
+              <h5>{this.props.currentRoom}</h5>
+            </div>
+
+            <Messages
+              currentMember={this.props.member}
+              messages={this.props.messages}
+            />
+            <Input
+              onSendMessage={this.onSendMessage} //metoda za publishati por u this.drone koji pritom pozove listener this.room.on("message", (message) =>{....}
+              //a u tom listeneru se poziva  this.props.addNewMessage(newMessage) koja ce updeatati samo stanje u reduxu tako da ovu metodu poizvamo na onSubmit da pokrene tu lančanu reakciju 1. this.drone.publish 2. this.room.on(message...) 3. update redux state sa this.props.addNewMessage(newMessage)
+              updateMessageValue={this.props.updateMessageValue} //metoda za updateati trenutni input value od tipkanja noce por jer mora biti kontolirana forma u reactu
+              currentMessageValue={this.props.currentMessageValue}
+            />
+          </Col>
+          <Col className="d-flex flex-column align-items-center ">
+            <Rooms rooms={this.props.rooms} changeRoom={this.changeRoom} />
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
