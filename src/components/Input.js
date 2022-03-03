@@ -12,13 +12,16 @@ const Input = ({ onSendMessage, updateMessageValue, currentMessageValue }) => {
   return (
     <form onSubmit={onSubmit}>
       <input
+        className="input-msg"
         onChange={onChange}
         value={currentMessageValue}
         type="text"
         placeholder="Enter your message and press ENTER"
         autoFocus={true}
       />
-      <button type="submit">Send</button>
+      <button className="btn-message" type="submit">
+        Send
+      </button>
     </form>
   );
 };

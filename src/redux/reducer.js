@@ -10,6 +10,7 @@ import {
   UPDATE_MESSAGE_VALUE,
   ADD_NEW_USER,
   SET_AVATAR,
+  RESET_STATE,
 } from "./actions";
 
 const initialState = {
@@ -53,7 +54,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         currentRoom: action.payload,
-        messages: [],
+        //messages: [],
         currentMessageValue: "",
       };
     }
@@ -75,6 +76,20 @@ export default function reducer(state = initialState, action) {
       return { ...state, onlineUsers: [...state.onlineUsers, action.payload] };
     case SET_AVATAR:
       return { ...state, member: { ...state.member, avatar: action.payload } };
+    case RESET_STATE:
+      return {
+        ...state,
+        inputLoginValue: "",
+        messages: [],
+        currentMessageValue: "",
+        member: {
+          username: "",
+          avatar: randomColor(),
+        },
+        onlineUsers: [],
+        rooms: ["observable-room1", "observable-room2", "observable-room3"],
+        currentRoom: "",
+      };
     default:
       return state;
   }

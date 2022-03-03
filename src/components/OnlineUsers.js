@@ -2,7 +2,7 @@ import React from "react";
 //import { Row, Col, Card } from "react-bootstrap";
 
 const OnlineUsers = ({ onlineUsers }) => {
-  console.log(onlineUsers);
+  //console.log(onlineUsers);
 
   const renderUsers = (user) => {
     let avatar;

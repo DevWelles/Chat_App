@@ -8,6 +8,7 @@ export const ADD_NEW_MESSAGE = "ADD_NEW_MESSAGE";
 export const UPDATE_MESSAGE_VALUE = "UPDATE_MESSAGE_VALUE"; //updateam u stanju currentmessage na ono sto user tipka u input za slanje nove por
 export const ADD_NEW_USER = "ADD_NEW_USER";
 export const SET_AVATAR = "SET_AVATAR";
+export const RESET_STATE = "RESET_STATE";
 
 export const updateUsername = (inputLoginValue) => {
   return { type: UPDATE_USERNAME, payload: inputLoginValue };
@@ -38,4 +39,7 @@ export const addNewUser = (newUser) => {
 };
 export const setAvatar = (avatar) => {
   return { type: SET_AVATAR, payload: avatar };
+};
+export const resetState = () => {
+  return { type: RESET_STATE };
 };

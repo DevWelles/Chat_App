@@ -22,12 +22,6 @@ const Login = (props) => {
   const selectAvatar = (event) => {
     //akcijska funkcija za setat avatar
     props.setAvatar(event.target.value);
-    //ovo isto napravi po svome neke nove avatar da ne budu ovi iz primjera
-    // Array.from(event.target.closest("ul").children).forEach(function (element) {
-    //   element.className = "reg-form__avatar";
-    // });
-    // event.target.closest("li").className =
-    //   "reg-form__avatar reg-form__avatar--clicked";
   };
 
   return (
@@ -50,11 +44,12 @@ const Login = (props) => {
                   onChange={handleChange}
                 />
               </div>
-              <span>Choose avatar (optional) :</span>
-              {<Avatars selectAvatar={selectAvatar} />}
-              <button type="submit" className="btn btn-dark btn-lg btn-block">
+
+              <button type="submit" className="btn btn-dark btn-lg btn-block ">
                 Login
               </button>
+              <h4>Choose avatar (optional) :</h4>
+              {<Avatars selectAvatar={selectAvatar} />}
             </form>
           </Card>
         </Col>

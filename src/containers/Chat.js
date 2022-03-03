@@ -8,9 +8,10 @@ import {
   addNewMessage,
   updateMessageValue,
   addNewUser,
+  resetState,
 } from "../redux/actions";
 import Rooms from "../components/Rooms";
-
+import LogOut from "../components/LogOut";
 import OnlineUsers from "../components/OnlineUsers";
 import Messages from "../components/Messages";
 import Input from "../components/Input";
@@ -67,13 +68,12 @@ class Chat extends Component {
     //adding new messages to messages state with action function this.props.addNewMessage(newMessage);
     this.room.on("message", (message) => {
       const { data, member, timestamp, id } = message;
-      console.log(`timestamp is ${timestamp}`);
       let time = timestamp * 1000;
       var date = new Date(timestamp * 1000);
       var hours = date.getHours();
-      var minutes = "0" + date.getMinutes();
-      var seconds = "0" + date.getSeconds();
-      time = `${hours} : ${minutes.substring(-2)} : ${seconds.substring(-2)}`;
+      var minutes = date.getMinutes();
+      var seconds = date.getSeconds();
+      time = `${hours} : ${minutes} : ${seconds}`;
       const newMessage = {
         member,
         text: data,
@@ -85,25 +85,35 @@ class Chat extends Component {
 
     this.changeRoom = this.changeRoom.bind(this);
     this.onSendMessage = this.onSendMessage.bind(this);
+    this.logOut = this.logOut.bind(this);
   }
 
   onSendMessage(message) {
-    console.log(this.drone);
+    //console.log(this.drone);
+    //console.log(this.props.currentRoom);
+    //console.log(message);
     this.drone.publish({
       room: this.props.currentRoom, //send messages in current room
       message: message,
     });
-    console.log("jesam li tu");
+    //console.log("jesam li tu");
   }
 
   changeRoom(room) {
-    this.room = this.drone.subscribe(room);
-    this.props.changeRoom(this.room.name); //akcijska funkcija da povežem sa stanjem currentRoom
-    console.log(this.room);
+    // this.room.unsubscribe();
+    // this.room = this.drone.subscribe(room);
+    this.props.changeRoom(room); //akcijska funkcija da povežem sa stanjem currentRoom
+    //console.log(this.room);
   }
   // addNewRoom(room) { //ovo cu ostavit za kraj jer mogu i direktno povezati komponentu AddNewRoom sa reduxom  i tribam napravit u njoj formu sa inputom itd
   //   this.props.addNewRoom(room);
   // }
+
+  logOut() {
+    this.drone.close();
+    this.props.resetState();
+  }
+
   render() {
     return (
       <Container fluid className="chat-bg">
@@ -116,7 +126,9 @@ class Chat extends Component {
             className="d-flex flex-column align-items-center chat-col-breakpoint "
           >
             <div className="d-flex flex-column align-items-center ">
-              <h3>Welcome {this.props.member.username}</h3>
+              <h3>
+                Welcome <strong>{this.props.member.username}</strong>
+              </h3>
               <h5>You are currently in room:</h5>
               <h5>{this.props.currentRoom}</h5>
             </div>
@@ -134,6 +146,7 @@ class Chat extends Component {
           </Col>
           <Col className="d-flex flex-column align-items-center ">
             <Rooms rooms={this.props.rooms} changeRoom={this.changeRoom} />
+            <LogOut logOut={this.logOut} />
           </Col>
         </Row>
       </Container>
@@ -160,6 +173,7 @@ const mapDispatchToProps = {
   addNewMessage,
   updateMessageValue,
   addNewUser,
+  resetState,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

@@ -29,8 +29,11 @@ const Messages = ({ currentMember, messages }) => {
       <li className={className} key={message.id}>
         {avatar}
         <div className="Message-content">
-          <div className="username">{message.member.clientData.username}</div>
-          <div className="text">{message.text}</div>
+          <span className="username">{message.member.clientData.username}</span>
+          <div className="text">
+            <div>{message.timestamp}</div>
+            {message.text}
+          </div>
         </div>
       </li>
     );
