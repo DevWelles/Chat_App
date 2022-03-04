@@ -73,8 +73,7 @@ class Chat extends Component {
       var date = new Date(timestamp * 1000);
       var hours = date.getHours();
       var minutes = date.getMinutes();
-      var seconds = date.getSeconds();
-      time = `${hours} : ${minutes} : ${seconds}`;
+      time = `${hours}:${minutes}`;
       const newMessage = {
         member,
         text: data,
@@ -106,10 +105,6 @@ class Chat extends Component {
     this.room = this.drone.subscribe(room);
     console.log(this.room);
   }
-
-  // addNewRoom(room) { //ovo cu ostavit za kraj jer mogu i direktno povezati komponentu AddNewRoom sa reduxom  i tribam napravit u njoj formu sa inputom itd
-  //   this.props.addNewRoom(room);
-  // }
 
   logOut() {
     this.drone.close();
