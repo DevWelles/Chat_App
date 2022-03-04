@@ -1,6 +1,15 @@
 import React from "react";
+import NewRoom from "./NewRoom";
 
-const Rooms = ({ rooms, changeRoom }) => {
+const Rooms = ({
+  rooms,
+  changeRoom,
+  inputNewRoomValue,
+  addNewRoom,
+  updateNewRoomValue,
+  toggleModal,
+  className,
+}) => {
   const handleChange = (event) => {
     changeRoom(event.target.value);
     //console.log(roomName);
@@ -20,6 +29,13 @@ const Rooms = ({ rooms, changeRoom }) => {
           </button>
         ))}
       </ul>
+      <NewRoom
+        inputNewRoomValue={inputNewRoomValue}
+        addNewRoom={addNewRoom}
+        updateNewRoomValue={updateNewRoomValue}
+        toggleModal={toggleModal}
+        className={className}
+      />
     </div>
   );
 };

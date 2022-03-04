@@ -11,6 +11,8 @@ import {
   ADD_NEW_USER,
   SET_AVATAR,
   RESET_STATE,
+  UPDATE_NEW_ROOM_VALUE,
+  SET_CLASSNAME,
 } from "./actions";
 
 const initialState = {
@@ -24,7 +26,9 @@ const initialState = {
   },
   onlineUsers: [],
   rooms: ["observable-room1", "observable-room2", "observable-room3"],
+  inputNewRoomValue: "",
   currentRoom: "",
+  className: "closeModal",
 };
 
 export default function reducer(state = initialState, action) {
@@ -54,12 +58,21 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         currentRoom: action.payload,
-        //messages: [],
+        messages: [],
         currentMessageValue: "",
       };
     }
     case ADD_NEW_ROOM: {
-      return { ...state, rooms: [...state.rooms, action.payload] };
+      let roomName = "observable-" + state.inputNewRoomValue;
+      roomName = roomName.replaceAll(" ", "_");
+      return {
+        ...state,
+        rooms: [...state.rooms, roomName],
+        inputNewRoomValue: "",
+      };
+    }
+    case UPDATE_NEW_ROOM_VALUE: {
+      return { ...state, inputNewRoomValue: action.payload };
     }
     case UPDATE_ONLINE_USERS:
       return { ...state, onlineUsers: action.payload };
@@ -89,6 +102,11 @@ export default function reducer(state = initialState, action) {
         onlineUsers: [],
         rooms: ["observable-room1", "observable-room2", "observable-room3"],
         currentRoom: "",
+      };
+    case SET_CLASSNAME:
+      return {
+        ...state,
+        className: action.payload,
       };
     default:
       return state;

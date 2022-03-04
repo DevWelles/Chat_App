@@ -4,11 +4,13 @@ import {
   updateMember,
   changeRoom,
   addNewRoom,
+  updateNewRoomValue,
   updateOnlineUsers,
   addNewMessage,
   updateMessageValue,
   addNewUser,
   resetState,
+  toggleModal,
 } from "../redux/actions";
 import Rooms from "../components/Rooms";
 import LogOut from "../components/LogOut";
@@ -47,7 +49,6 @@ class Chat extends Component {
 
     this.room.on("members", (m) => {
       const members = m;
-      console.log(members);
       this.props.updateOnlineUsers(members); //u state onlineUSers guramo sve members objekte i taj svaki member ce biti drugaciji od state
     });
 
@@ -92,19 +93,20 @@ class Chat extends Component {
     //console.log(this.drone);
     //console.log(this.props.currentRoom);
     //console.log(message);
+    console.log(this.room);
     this.drone.publish({
-      room: this.props.currentRoom, //send messages in current room
+      room: this.props.currentRoom, //ako promijenim sobu neće mi odraditi publish zašto???
       message: message,
     });
-    //console.log("jesam li tu");
   }
 
   changeRoom(room) {
-    // this.room.unsubscribe();
-    // this.room = this.drone.subscribe(room);
     this.props.changeRoom(room); //akcijska funkcija da povežem sa stanjem currentRoom
-    //console.log(this.room);
+    this.room.unsubscribe();
+    this.room = this.drone.subscribe(room);
+    console.log(this.room);
   }
+
   // addNewRoom(room) { //ovo cu ostavit za kraj jer mogu i direktno povezati komponentu AddNewRoom sa reduxom  i tribam napravit u njoj formu sa inputom itd
   //   this.props.addNewRoom(room);
   // }
@@ -145,7 +147,15 @@ class Chat extends Component {
             />
           </Col>
           <Col className="d-flex flex-column align-items-center ">
-            <Rooms rooms={this.props.rooms} changeRoom={this.changeRoom} />
+            <Rooms
+              rooms={this.props.rooms}
+              changeRoom={this.changeRoom}
+              inputNewRoomValue={this.props.inputNewRoomValue}
+              addNewRoom={this.props.addNewRoom}
+              updateNewRoomValue={this.props.updateNewRoomValue}
+              toggleModal={this.props.toggleModal}
+              className={this.props.className}
+            />
             <LogOut logOut={this.logOut} />
           </Col>
         </Row>
@@ -159,9 +169,11 @@ function mapStateToProps(state) {
     member: state.member,
     rooms: state.rooms,
     currentRoom: state.currentRoom,
+    inputNewRoomValue: state.inputNewRoomValue,
     onlineUsers: state.onlineUsers,
     messages: state.messages,
     currentMessageValue: state.currentMessageValue,
+    className: state.className,
   };
 }
 
@@ -169,11 +181,13 @@ const mapDispatchToProps = {
   updateMember,
   changeRoom,
   addNewRoom,
+  updateNewRoomValue,
   updateOnlineUsers,
   addNewMessage,
   updateMessageValue,
   addNewUser,
   resetState,
+  toggleModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

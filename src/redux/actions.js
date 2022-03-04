@@ -9,6 +9,8 @@ export const UPDATE_MESSAGE_VALUE = "UPDATE_MESSAGE_VALUE"; //updateam u stanju 
 export const ADD_NEW_USER = "ADD_NEW_USER";
 export const SET_AVATAR = "SET_AVATAR";
 export const RESET_STATE = "RESET_STATE";
+export const UPDATE_NEW_ROOM_VALUE = "UPDATE_NEW_ROOM_VALUE"; //updateam u stanju inputNewRoomValue na ono sto user tipka u input za ime nove sobe
+export const SET_CLASSNAME = "SET_CLASSNAME";
 
 export const updateUsername = (inputLoginValue) => {
   return { type: UPDATE_USERNAME, payload: inputLoginValue };
@@ -22,8 +24,11 @@ export const updateMember = (member) => {
 export const changeRoom = (room) => {
   return { type: CHANGE_ROOM, payload: room };
 };
-export const addNewRoom = (room) => {
-  return { type: ADD_NEW_ROOM, payload: room };
+export const addNewRoom = () => {
+  return { type: ADD_NEW_ROOM };
+};
+export const updateNewRoomValue = (newRoomName) => {
+  return { type: UPDATE_NEW_ROOM_VALUE, payload: newRoomName };
 };
 export const updateOnlineUsers = (onlineUsers) => {
   return { type: UPDATE_ONLINE_USERS, payload: onlineUsers };
@@ -42,4 +47,7 @@ export const setAvatar = (avatar) => {
 };
 export const resetState = () => {
   return { type: RESET_STATE };
+};
+export const toggleModal = (classname) => {
+  return { type: SET_CLASSNAME, payload: classname };
 };

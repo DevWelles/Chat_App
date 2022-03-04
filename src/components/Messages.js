@@ -20,7 +20,7 @@ const Messages = ({ currentMember, messages }) => {
       avatar = <div className="avatar">{message.member.clientData.avatar}</div>;
     }
     const myMessage = currentMember.id === message.member.id;
-    console.log(myMessage);
+
     const className = myMessage
       ? "Messages-message currentMember"
       : "Messages-message";
@@ -31,7 +31,7 @@ const Messages = ({ currentMember, messages }) => {
         <div className="Message-content">
           <span className="username">{message.member.clientData.username}</span>
           <div className="text">
-            <div>{message.timestamp}</div>
+            <div className="time">{message.timestamp}</div>
             {message.text}
           </div>
         </div>
