@@ -25,6 +25,7 @@
 - Channels
 
 Each app environment (myapp production, myapp staging, etc.) should have a separate channel with its own ID and secret key.
+Having an active connection opened between the client and the server so client can send and receive data. This allows real-time communication using TCP sockets. This is made possible by Scaledrone.
 
 - Rooms
  
@@ -37,3 +38,14 @@ Observable rooms act like regular rooms but provide additional functionality for
 The observable rooms feature provides you with the following features:
 A way to attach data to a Socket connection. Useful for adding personal data such as a name or an ID to a connection.
 Additional events to keep track of other users who have subscribed to the room.
+
+## Run it locally
+
+Make sure you have Node.js and npm install.
+
+1. Clone or Download the repository
+2. Install Dependencies 
+    npm install
+3. Start the Application
+    npm start
+ 
