@@ -44,8 +44,6 @@ Additional events to keep track of other users who have subscribed to the room.
 Make sure you have Node.js and npm install.
 
 1. Clone or Download the repository
-2. Install Dependencies 
-    npm install
-3. Start the Application
-    npm start
+2. Install Dependencies (npm install)
+3. Start the Application (npm start)
  
