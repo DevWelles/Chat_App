@@ -10,7 +10,7 @@ const Input = ({ onSendMessage, updateMessageValue, currentMessageValue }) => {
     onSendMessage(currentMessageValue);
   };
   return (
-    <form onSubmit={onSubmit}>
+    <form className="form-message" onSubmit={onSubmit}>
       <input
         className="input-msg"
         onChange={onChange}

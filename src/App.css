@@ -52,7 +52,7 @@
   font-size: small;
 }
 
-form {
+.form-message {
   display: flex;
   width: 100%;
   justify-content: space-between;
