@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+# **Real Time Chat App**
+## Created with
+- Javascript
+- React, Redux
+- HTML, CSS
+- Scaledrone API and Websockets
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Features
 
-## Available Scripts
+### Login, choose your name and avatar
 
-In the project directory, you can run:
+![Login](https://user-images.githubusercontent.com/80517895/157100834-b9b8938d-24fe-457d-8d03-6e9bfd2019f9.png)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Chat with up to 20 users
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![chat](https://user-images.githubusercontent.com/80517895/157099797-6bc5eb12-fb97-4457-b584-6626e501add0.png)
 
-### `npm test`
+### Create your own new chat rooms
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![newRoom](https://user-images.githubusercontent.com/80517895/157102917-f7c883dc-8a9e-4ba7-995c-575ced6bd5e7.png)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How it works
+- Channels
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Each app environment (myapp production, myapp staging, etc.) should have a separate channel with its own ID and secret key.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Rooms
+ 
+Rooms divide users connected to a channel into separate messaging groups.
+When publishing a message to Scaledrone you need to define a room. A message published to a room will be broadcast to all users who have subscribed to that room (including the original publishing user, if they are subscribed).
 
-### `npm run eject`
+- Observable Rooms
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Observable rooms act like regular rooms but provide additional functionality for keeping track of connected users and linking messages to users.
+The observable rooms feature provides you with the following features:
+A way to attach data to a Socket connection. Useful for adding personal data such as a name or an ID to a connection.
+Additional events to keep track of other users who have subscribed to the room.
