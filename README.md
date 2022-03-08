@@ -24,8 +24,8 @@
 ## How it works
 - Channels
 
-Each app environment (myapp production, myapp staging, etc.) should have a separate channel with its own ID and secret key.
-Having an active connection opened between the client and the server so client can send and receive data. This allows real-time communication using TCP sockets. This is made possible by Scaledrone.
+Each app environment has a separate channel with its own ID and secret key.
+Having an active connection opened between the client and the server so client can send and receive data. This allows real-time communication using TCP sockets. This is made possible by [Scaledrone](https://www.scaledrone.com/)
 
 - Rooms
  
@@ -37,7 +37,7 @@ When publishing a message to Scaledrone you need to define a room. A message pub
 Observable rooms act like regular rooms but provide additional functionality for keeping track of connected users and linking messages to users.
 The observable rooms feature provides you with the following features:
 A way to attach data to a Socket connection. Useful for adding personal data such as a name or an ID to a connection.
-Additional events to keep track of other users who have subscribed to the room.
+Keeping track of online users
 
 ## Run it locally
 
