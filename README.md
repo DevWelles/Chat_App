@@ -3,7 +3,7 @@
 - Javascript
 - React, Redux
 - HTML, CSS
-- Scaledrone API and Websockets
+- [Scaledrone] (https://www.scaledrone.com/) API and Websockets
 
 ## Features
 
