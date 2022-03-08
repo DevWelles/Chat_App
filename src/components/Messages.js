@@ -1,13 +1,7 @@
 import React from "react";
 
 const Messages = ({ currentMember, messages }) => {
-  //console.log(messages);
-  //console.log(currentMember);
-
   const renderMessage = (message) => {
-    // console.log(currentMember.id);
-    //console.log(message);
-
     let avatar;
     if (message.member.clientData.avatar.startsWith("#")) {
       avatar = (

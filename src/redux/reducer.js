@@ -20,14 +20,13 @@ const initialState = {
   messages: [],
   currentMessageValue: "",
   member: {
-    //ovo je trenutni memeber i različit je od objekata memmebrs u arras onine users koje dobijemo od this.drone
     username: "",
     avatar: randomColor(),
   },
   onlineUsers: [],
   rooms: ["observable-room1", "observable-room2", "observable-room3"],
   inputNewRoomValue: "",
-  currentRoom: "",
+  currentRoom: "observable-room1",
   className: "closeModal",
 };
 
@@ -53,13 +52,12 @@ export default function reducer(state = initialState, action) {
       };
     }
     case CHANGE_ROOM: {
-      //mislim da bi triba odi cili state resetirati jer sad mi povuče state sa ...state i zato mi bude isto u svim sobama to ću morat popravit i proučit
-      // i iz nekog razloga kad prominit sobu mi ne radti Onclick na send button tj submit formu za slanje nove por
       return {
         ...state,
         currentRoom: action.payload,
         messages: [],
         currentMessageValue: "",
+        onlineUsers: [],
       };
     }
     case ADD_NEW_ROOM: {
@@ -80,7 +78,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         messages: [...state.messages, action.payload],
-        currentMessageValue: "", //isto kao kod logina vraćam vrijednost inputa u stanju na ""
+        currentMessageValue: "",
       };
     case UPDATE_MESSAGE_VALUE: {
       return { ...state, currentMessageValue: action.payload };

@@ -18,9 +18,7 @@ const Login = (props) => {
     navigate("/chat", { replace: true });
   };
 
-  //za avatere:
   const selectAvatar = (event) => {
-    //akcijska funkcija za setat avatar
     props.setAvatar(event.target.value);
   };
 

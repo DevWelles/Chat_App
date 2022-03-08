@@ -1,18 +1,23 @@
 import React from "react";
 import NewRoom from "./NewRoom";
+import { changeRoom } from "../redux/actions";
+import { connect } from "react-redux";
 
 const Rooms = ({
-  rooms,
+  currentRoom,
   changeRoom,
+  rooms,
+  handleRoomChange,
   inputNewRoomValue,
   addNewRoom,
   updateNewRoomValue,
   toggleModal,
   className,
 }) => {
-  const handleChange = (event) => {
-    changeRoom(event.target.value);
-    //console.log(roomName);
+  const handleChange = async (event) => {
+    console.log(currentRoom);
+    await changeRoom(event.target.value);
+    handleRoomChange(currentRoom);
   };
   return (
     <div className="onlineUsers">
@@ -40,4 +45,14 @@ const Rooms = ({
   );
 };
 
-export default Rooms;
+function mapStateToProps(state) {
+  return {
+    currentRoom: state.currentRoom,
+  };
+}
+
+const mapDispatchToProps = {
+  changeRoom,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Rooms);

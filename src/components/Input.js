@@ -8,6 +8,7 @@ const Input = ({ onSendMessage, updateMessageValue, currentMessageValue }) => {
   const onSubmit = (event) => {
     event.preventDefault();
     onSendMessage(currentMessageValue);
+    updateMessageValue("");
   };
   return (
     <form className="form-message" onSubmit={onSubmit}>

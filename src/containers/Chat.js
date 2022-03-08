@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   updateMember,
-  changeRoom,
   addNewRoom,
   updateNewRoomValue,
   updateOnlineUsers,
@@ -23,50 +22,47 @@ class Chat extends Component {
   constructor(props) {
     super(props);
     this.drone = new window.Scaledrone("QPsUDZLWlNYqr5RE", {
-      // Will be sent out as clientData via events
-      data: this.props.member, //ako cu koristit redux
+      data: this.props.member,
     });
     this.drone.on("open", (error) => {
       if (error) {
         return console.error(error);
       }
-      console.log("Successfully connected to Scaledrone");
       const member = this.props.member;
-      member.id = this.drone.clientId; //tu memberu samo seta prop id iz drone.clientId
-      this.props.updateMember(member); //za redux
+      member.id = this.drone.clientId;
+      this.props.updateMember(member);
     });
+    this.handleRoomChange = this.handleRoomChange.bind(this);
+    this.onSendMessage = this.onSendMessage.bind(this);
+    this.logOut = this.logOut.bind(this);
+    this.subsrcibeRoom = this.subsrcibeRoom.bind(this);
+  }
 
-    this.room = this.drone.subscribe(this.props.rooms[0]); //po defaultu neka bude prva soba iz stanja
-    //console.log(this.room);
-    this.props.changeRoom(this.room.name); //akcijska funkcija da povežem sa stanjem currentRoom
+  subsrcibeRoom() {
+    this.room = this.drone.subscribe(this.props.currentRoom);
 
     this.room.on("open", (error) => {
       if (error) {
         return console.error(error);
       }
-      console.log("Successfully joined room"); //samo console logam da provjerim jesam li u sobi
     });
 
     this.room.on("members", (m) => {
       const members = m;
-      this.props.updateOnlineUsers(members); //u state onlineUSers guramo sve members objekte i taj svaki member ce biti drugaciji od state
+      this.props.updateOnlineUsers(members);
     });
 
-    //User joined the room
     this.room.on("member_join", (member) => {
-      console.log(member);
-      this.props.addNewUser(member); //dodajemo jednog novo membera
+      this.props.addNewUser(member);
     });
 
-    // User left the room
     this.room.on("member_leave", ({ id }) => {
       let newOnlineUsers = this.props.onlineUsers;
       const index = newOnlineUsers.findIndex((member) => member.id === id);
       newOnlineUsers.splice(index, 1);
-      this.props.updateOnlineUsers(newOnlineUsers); //setam u storeu da novo stanje
+      this.props.updateOnlineUsers(newOnlineUsers);
     });
 
-    //adding new messages to messages state with action function this.props.addNewMessage(newMessage);
     this.room.on("message", (message) => {
       const { data, member, timestamp, id } = message;
       let time = timestamp * 1000;
@@ -82,28 +78,25 @@ class Chat extends Component {
       };
       this.props.addNewMessage(newMessage);
     });
+  }
 
-    this.changeRoom = this.changeRoom.bind(this);
-    this.onSendMessage = this.onSendMessage.bind(this);
-    this.logOut = this.logOut.bind(this);
+  componentDidMount() {
+    this.subsrcibeRoom();
   }
 
   onSendMessage(message) {
-    //console.log(this.drone);
-    //console.log(this.props.currentRoom);
-    //console.log(message);
-    console.log(this.room);
+    console.log(this.props.currentRoom);
+    console.log(message);
     this.drone.publish({
-      room: this.props.currentRoom, //ako promijenim sobu neće mi odraditi publish zašto???
+      room: this.props.currentRoom,
       message: message,
     });
   }
 
-  changeRoom(room) {
-    this.props.changeRoom(room); //akcijska funkcija da povežem sa stanjem currentRoom
+  handleRoomChange() {
     this.room.unsubscribe();
-    this.room = this.drone.subscribe(room);
-    console.log(this.room);
+    this.room = this.drone.subscribe(this.props.currentRoom);
+    this.subsrcibeRoom();
   }
 
   logOut() {
@@ -135,16 +128,15 @@ class Chat extends Component {
               messages={this.props.messages}
             />
             <Input
-              onSendMessage={this.onSendMessage} //metoda za publishati por u this.drone koji pritom pozove listener this.room.on("message", (message) =>{....}
-              //a u tom listeneru se poziva  this.props.addNewMessage(newMessage) koja ce updeatati samo stanje u reduxu tako da ovu metodu poizvamo na onSubmit da pokrene tu lančanu reakciju 1. this.drone.publish 2. this.room.on(message...) 3. update redux state sa this.props.addNewMessage(newMessage)
-              updateMessageValue={this.props.updateMessageValue} //metoda za updateati trenutni input value od tipkanja noce por jer mora biti kontolirana forma u reactu
+              onSendMessage={this.onSendMessage}
+              updateMessageValue={this.props.updateMessageValue}
               currentMessageValue={this.props.currentMessageValue}
             />
           </Col>
           <Col className="d-flex flex-column align-items-center ">
             <Rooms
               rooms={this.props.rooms}
-              changeRoom={this.changeRoom}
+              handleRoomChange={this.handleRoomChange}
               inputNewRoomValue={this.props.inputNewRoomValue}
               addNewRoom={this.props.addNewRoom}
               updateNewRoomValue={this.props.updateNewRoomValue}
@@ -174,7 +166,6 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   updateMember,
-  changeRoom,
   addNewRoom,
   updateNewRoomValue,
   updateOnlineUsers,
