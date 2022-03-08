@@ -1,7 +1,22 @@
-import React from "react";
+import React, { Component } from "react";
 
-const Messages = ({ currentMember, messages }) => {
-  const renderMessage = (message) => {
+export default class Messages extends Component {
+  constructor(props) {
+    super(props);
+    this.messagesEndRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+  scrollToBottom = () => {
+    this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  renderMessage(message) {
     let avatar;
     if (message.member.clientData.avatar.startsWith("#")) {
       avatar = (
@@ -13,7 +28,7 @@ const Messages = ({ currentMember, messages }) => {
     } else {
       avatar = <div className="avatar">{message.member.clientData.avatar}</div>;
     }
-    const myMessage = currentMember.id === message.member.id;
+    const myMessage = this.props.currentMember.id === message.member.id;
 
     const className = myMessage
       ? "Messages-message currentMember"
@@ -31,12 +46,14 @@ const Messages = ({ currentMember, messages }) => {
         </div>
       </li>
     );
-  };
-  return (
-    <ul className="Messages-list ">
-      {messages.map((message) => renderMessage(message))}
-    </ul>
-  );
-};
+  }
 
-export default Messages;
+  render() {
+    return (
+      <ul className="Messages-list ">
+        {this.props.messages.map((message) => this.renderMessage(message))}
+        <div ref={this.messagesEndRef} />
+      </ul>
+    );
+  }
+}

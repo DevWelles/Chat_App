@@ -21,8 +21,13 @@ export const login = () => {
 export const updateMember = (member) => {
   return { type: UPDATE_MEMBER, payload: member };
 };
-export const changeRoom = (roomName) => {
-  return { type: CHANGE_ROOM, payload: roomName };
+// export const changeRoom = (roomName) => {
+//   return { type: CHANGE_ROOM, payload: roomName };
+// };
+//reduxThunks
+export const changeRoom = (roomName) => async (dispatch) => {
+  const newRoomName = await roomName;
+  dispatch({ type: CHANGE_ROOM, payload: newRoomName });
 };
 export const addNewRoom = () => {
   return { type: ADD_NEW_ROOM };
