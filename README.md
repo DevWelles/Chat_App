@@ -46,4 +46,7 @@ Make sure you have Node.js and npm install.
 1. Clone or Download the repository
 2. Install Dependencies (npm install)
 3. Start the Application (npm start)
+
+## Link to deployed app using Netlify:
+https://xenodochial-leakey-8989e0.netlify.app/
  
